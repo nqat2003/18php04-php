@@ -49,13 +49,13 @@
 	<input type="submit" name="ok" value="Submit">
 </form>
 <?php 
-	if (isset($_POST['number'])&&isset($_POST['number2'])){
+	if (isset($_POST['number']) && isset($_POST['number2'])){
 		$a = $_POST['number'];
 		$b = $_POST['number2'];
 		$tong = sum($a,$b);
 		echo "Tổng của $a và $b là $tong<br>";
 		if ($tong < 1000) {
-			$dv = $tong%10;
+			$dv = $tong % 10;
 			if ($dv % 2 == 0)
 				echo "Hàng đơn vị của $tong là $dv và là số chẵn";
 			else

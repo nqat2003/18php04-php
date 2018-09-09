@@ -21,28 +21,47 @@
 		'y' => array(
 			'name' => 'Ý',
 			'age' => 20,
-			'gender' => 'female'
+			'gender' => 'female',
+			'phone' => "0988.."
 		),
 		'tai' => array(
 			'name' => 'Tài',
 			'age' => 21,
-			'gender' => 'male'
+			'gender' => 'male',
+			'phone' => "0988.."
 		),
 		'minh' => array(
 			'name' => 'Minh',
 			'age' => 21,
-			'gender' => 'male'
+			'gender' => 'male',
+			'phone' => "0988.."
 		)
 	);
 	var_dump($arrayNotOneWay);
 	echo "<hr>";
-	$i = 1;
-	foreach ($arrayNotOneWay as $key => $value) {
-		echo $i.". " . $value['name'] . " - " . $value['age'] ." tuổi";
-		if ($value['gender']=='male') {
-			echo " - Nam" ;
-		}else{ echo " - Nữ";}
-		echo "<br>";
-		$i++;
+	
+	function printClass($arr){
+		$i = 1;
+		foreach ($arr as $key => $value) {
+			echo $i.". " . $value['name'] . " - " . $value['age'] ." tuổi";
+			if ($value['gender']=='male') {
+				echo " - Nam - " ;
+			}else{ echo " - Nữ - ";}
+			echo $value['phone']. "<br>";
+			$i++;
+		}
 	}
+	$newMember = array(
+		'vuong'=> array(
+			'name' => "Vương",
+			'age' => 25, 
+			'gender' => 'male', 
+			'phone' => "0988..."
+		)
+	);
+	$arrayNotOneWay = array_merge($arrayNotOneWay,$newMember);
+	printClass($arrayNotOneWay);
+	$arrayNotOneWay['y']['phone'] = '0168...';
+	echo '<hr>';
+	printClass($arrayNotOneWay);
 ?>

@@ -58,8 +58,21 @@
 			$dv = $tong % 10;
 			if ($dv % 2 == 0)
 				echo "Hàng đơn vị của $tong là $dv và là số chẵn";
-			else
-				echo "Hàng đơn vị của $tong là $dv và là số lẻ";
+			elseif ($dv % 3 == 0)
+				echo "Hàng đơn vị của $tong là $dv là số lẻ và chia hết cho 3";
+				else
+				echo "Hàng đơn vị của $tong là $dv là số lẻ và không chia hết cho 3";
 		}
 	}
+	// echo "<hr>";
+	// $so = 123;
+	// echo $so . "<br>";
+	// $sodaonguoc = 0;
+	// while ($so != 0){
+	// 	$a = $so % 10;
+	// 	$sodaonguoc = $sodaonguoc * 10 + $a;
+	// 		echo "$sodaonguoc<br>";
+	// 	$so = floor($so / 10);
+	// }
+	// echo $sodaonguoc;
 ?>

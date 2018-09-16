@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Excise Form</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+	<style type="text/css">
+	#wrapper{
+		width: 99%;
+		margin: 0 auto;
+		display: flex;
+	}
+	#left{
+		width: 50%;
+		border: 1px solid lightblue;
+		border-radius: 10px;
+		padding: 10px;
+	}
+	#right{
+		width: 48%;
+		text-align: center;
+	}
+	img{
+		width: 200px;
+		height: 200px;
+	}
+	a{
+		margin-top: 10px;
+		height: 50px;
+		line-height: 50px;
+	}
+</style>
+</head>
+<body>
+	<?php 
+	$errName = "";
+	$errMail = "";
+	$errPass = "";
+	$errRePass = "";
+	$errGender = "";
+	$errIntro = "";
+	$errFile = "";
+	if (isset($_POST['submit'])){
+		$check = true;
+		$target_dir = "imguploads/" . basename($_FILES["file"]["name"]);
+		if (empty($_POST['name'])){
+			$errName = "Please input your name";
+			$check = false;
+		}
+		if (empty($_POST['mail'])){
+			$errMail = "Please input your mail";
+			$check = false;
+		}
+		if (!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)) {
+			$errMail = "Invalid email format"; 
+			$check = false;
+		}
+		if (empty($_POST['pass'])){
+			$errPass = "Please input your password";
+			$check = false;
+		}
+		if (empty($_POST['re-pass'])){
+			$errRePass = "Please re-enter password";
+			$check = false;
+		}
+		if ($_POST['pass'] != $_POST['re-pass']){
+			$errRePass = "Not match with password";
+			$check = false;
+		}
+		if (empty($_POST['gender'])){
+			$errGender = "Please choose your gender";
+			$check = false;
+		}
+		if (empty($_POST['intro'])){
+			$errIntro = "Please input your introduction";
+			$check = false;
+		}
+		if($_FILES['file']['error'] != 0) {
+			$errFile = "Please choose a file";
+			$check = false;      
+		}
+		move_uploaded_file($_FILES["file"]["tmp_name"], $target_dir);
+		$name = $_POST['name'];
+		$mail = $_POST['mail'];
+		$pass = "<strike>Đoán xem</strike>";
+		$gender = $_POST['gender'];
+		$intro = $_POST['intro'];
+		$city = $_POST['city'];
+	}
+	?>
+	<div id="wrapper">
+		<div id="left">
+			<h1 class="d-flex justify-content-center">REGISTER FORM</h1>
+			<?php 
+			if (isset($check)){
+				if ($check)
+					echo "<h2 class='d-flex justify-content-center text-success'>Register Success</h2>";
+				else
+					echo "";
+			}
+			?>
+			<form method="POST" action="#" enctype="multipart/form-data">
+				<div class="form-group">
+					<label>Name</label>
+					<input type="text" class="form-control" placeholder="Your name..." name="name">
+					<small class="text-danger"><?php echo $errName; ?></small>
+				</div>
+				<div class="form-group">
+					<label>Email</label>
+					<input type="mail" class="form-control" placeholder="Your email..." name="mail">
+					<small class="text-danger"><?php echo $errMail; ?></small>
+				</div>
+				<div class="form-group">
+					<label>Password</label>
+					<input type="password" class="form-control" placeholder="Password" name="pass">
+					<small class="text-danger"><?php echo $errPass; ?></small>
+				</div>
+				<div class="form-group">
+					<label>Re-Password</label>
+					<input type="password" class="form-control" placeholder="Password" name="re-pass">
+					<small class="text-danger"><?php echo $errRePass; ?></small>
+				</div>
+				<div class="form-group">
+					<label>Gender</label><br>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+							<input type="radio" class="form-check-input" name="gender" value="Male">Male
+						</label>
+					</div>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+							<input type="radio" class="form-check-input" name="gender" value="Female">Femal
+						</label>
+					</div>
+					<div class="form-check-inline">
+						<label class="form-check-label">
+							<input type="radio" class="form-check-input" name="gender" value="Other">Other
+						</label>
+					</div><br>
+					<small class="text-danger"><?php echo $errGender; ?></small>
+				</div>
+				<div class="form-group">
+					<label>Your City</label>
+					<select class="custom-select" name="city">
+						<option selected value="Hà Nội">Hà Nội</option>
+						<option value="Huế">Huế</option>
+						<option value="Đà Nẵng">Đà Nẵng</option>
+						<option value="Tp Hồ Chí Minh">Tp Hồ Chí Minh</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Introduction</label>
+					<textarea class="form-control" rows="3" name="intro"></textarea>
+					<small class="text-danger"><?php echo $errIntro; ?></small>
+				</div>
+				<div class="form-group">
+					<label>Avatar</label>
+					<input type="file" class="form-control-file" aria-describedby="fileHelp" multiple="multiple" name="file">
+					<small class="text-danger"><?php echo $errFile; ?></small>
+				</div>
+				<button type="submit" class="btn btn-primary" name="submit">Submit</button>
+			</form>
+		</div>
+		<?php 
+			if (isset($check))
+				if ($check){
+		?>
+		<div id="right">
+			<h2 class="d-flex justify-content-center text-success">Thông tin đã đăng kí</h2>
+			<p>Name : <?php echo $name; ?></p>
+			<p>Mail: <?php echo $mail; ?></p>
+			<p>Password: <?php echo $pass; ?></p>
+			<p>Gender: <?php echo $gender; ?></p>
+			<p>Thành phố: <?php echo $city; ?></p>
+			<p>Introduction: <?php echo $intro; ?></p>
+			<?php echo "<img src=$target_dir>";?>
+			<p><a href="ex_form.php">Back</a></p>
+			<?php } ?>
+		</div>
+	</div>
+	<script src="boostrap.min.js"></script>
+</body>
+</html>

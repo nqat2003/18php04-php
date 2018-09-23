@@ -40,6 +40,7 @@
 	$errGender = "";
 	$errIntro = "";
 	$errFile = "";
+	$checkMale = $checkFemale = $checkOther = "";
 	$gender = $name = $pass = $mail = $intro = $city = "";
 	if (isset($_POST['submit'])){
 		$check = true;
@@ -77,10 +78,6 @@
 			$errIntro = "Please input your introduction";
 			$check = false;
 		}
-		if($_FILES['file']['error'] != 0) {
-			$errFile = "Please choose a file";
-			$check = false;      
-		}
 		if ($_FILES["file"]["size"] > 500000) {
 			$errFile = "Your file is too large.(must lower than 5MB)";
 			$check = false;
@@ -90,26 +87,51 @@
 			$errFile = "Only JPG, JPEG, PNG & GIF files are allowed.";
 			$check = false;
 		}
+		if($_FILES['file']['error'] != 0) {
+			$errFile = "Please choose a file";
+			$check = false;      
+		}
+		if (isset($_POST['gender'])){
+			if ($_POST['gender'] == "Male"){
+			$checkMale = "checked";
+			}
+			if ($_POST['gender'] == "Female"){
+				$checkFemale = "checked";
+			}
+			if ($_POST['gender'] == "Other"){
+				$checkOther = "checked";
+			}
+		}
 		move_uploaded_file($_FILES["file"]["tmp_name"], $target_dir);
 		$name = $_POST['name'];
 		$mail = $_POST['mail'];
 		$pass = "<strike>Đoán xem</strike>";
 		$intro = $_POST['intro'];
 		$city = $_POST['city'];
+		// if($_FILES['file']['error'] == 0) {
+		// 	$img = resize_img($target_dir,50,50);
+		// }
 	}
+	// function resize_img($file, $w, $h){
+	// 	list($width,$height) = getimagesize($file);
+	// 	$src_image = imagecreatefromjpeg($file);
+	// 	$dst_image = imagecreatetruecolor($w, $h);
+	// 	imagecopyresampled($dst_image, $src_image, 0, 0, 0, 0, $w, $h, $width, $height);
+	// 	return $dst_image;
+	// }
 ?>
 <div id="wrapper">
 	<div id="left">
 		<h1 class="d-flex justify-content-center">REGISTER FORM</h1>
 		<?php 
-		if (isset($check)){
-			if ($check)
-				echo "<h2 class='d-flex justify-content-center text-success'>Register Success</h2>";
-			else
-				echo "";
-		}
+			if (isset($check)){
+				if ($check)
+					echo "<h2 class='d-flex justify-content-center text-success'>Register Success</h2>";
+				else
+					echo "";
+			}
 		?>
-		<form method="POST" action="#" enctype="multipart/form-data">
+		<form method="POST" action="#submit" enctype="multipart/form-data">
 			<div class="form-group">
 				<label>Name</label>
 				<input type="text" class="form-control" placeholder="Your name..." name="name" value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>">
@@ -134,17 +156,17 @@
 				<label>Gender</label><br>
 				<div class="form-check-inline">
 					<label class="form-check-label">
-						<input type="radio" class="form-check-input" name="gender" value="Male">Male
+						<input type="radio" class="form-check-input" name="gender" <?php echo $checkMale; ?> value="Male">Male
 					</label>
 				</div>
 				<div class="form-check-inline">
 					<label class="form-check-label">
-						<input type="radio" class="form-check-input" name="gender" value="Female">Femal
+						<input type="radio" class="form-check-input" name="gender" <?php echo $checkFemale; ?> value="Female">Female
 					</label>
 				</div>
 				<div class="form-check-inline">
 					<label class="form-check-label">
-						<input type="radio" class="form-check-input" name="gender" value="Other">Other
+						<input type="radio" class="form-check-input" name="gender" <?php echo $checkOther; ?>  value="Other">Other
 					</label>
 				</div><br>
 				<small class="text-danger"><?php echo $errGender; ?></small>
@@ -152,10 +174,14 @@
 			<div class="form-group">
 				<label>Your City</label>
 				<select class="custom-select" name="city">
-					<option value="Hà Nội">Hà Nội</option>
-					<option value="Huế">Huế</option>
-					<option value="Đà Nẵng">Đà Nẵng</option>
-					<option value="Tp Hồ Chí Minh">Tp Hồ Chí Minh</option>
+					<option  <?php if (isset($_POST['city'])) {
+					if ($_POST['city'] == "Hà Nội") { ?> selected="true" <?php }}; ?> value="Hà Nội">Hà Nội</option>
+					<option  <?php if (isset($_POST['city'])) {
+					if ($_POST['city'] == "Huế") { ?> selected="true" <?php }}; ?> value="Huế">Huế</option>
+					<option  <?php if (isset($_POST['city'])) {
+					if ($_POST['city'] == "Đà Nẵng") { ?> selected="true" <?php }}; ?> value="Đà Nẵng">Đà Nẵng</option>
+					<option  <?php if (isset($_POST['city'])) {
+					if ($_POST['city'] == "Tp Hồ Chí Minh") { ?> selected="true" <?php }}; ?> value="Tp Hồ Chí Minh">Tp Hồ Chí Minh</option>
 				</select>
 			</div>
 			<div class="form-group">
@@ -168,7 +194,7 @@
 				<input type="file" class="form-control-file" aria-describedby="fileHelp" multiple="multiple" name="file">
 				<small class="text-danger"><?php echo $errFile; ?></small>
 			</div>
-			<button type="submit" class="btn btn-primary" name="submit">Submit</button>
+			<button type="submit" id="submit" class="btn btn-primary" name="submit">Submit</button>
 		</form>
 	</div>
 	<?php 

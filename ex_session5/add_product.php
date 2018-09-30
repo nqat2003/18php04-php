@@ -31,7 +31,7 @@
 				}else{
 					$sql = "INSERT INTO products (`name`,`price`,`description`) values ('$name','$price','$description')";
 					if(mysqli_query($con,$sql)){
-					header("location:list_product.php");
+						header("location:list_product.php");
 					}
 					else
 						echo "<b>Error: " . $sql . "<br>" . mysqli_error($con)."</b>";

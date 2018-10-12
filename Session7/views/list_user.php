@@ -1,55 +1,61 @@
-<?php
-    include 'connectdtb.php';
-    $sql = "SELECT * FROM user";
-    ?>
-    <div class="box">
-      <div class="box-header">
-        <h3 class="box-title">LIST USER</h3>
-        <div class="box-tools">
-            <form action="" method="POST">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-                <div class="input-group-btn">
-                  <button type="submit" name="search" class="btn btn-default"><i class="fa fa-search"></i></button>
-              </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    img{
+      width: 100px;
+      height: 100px;
+    }
+    table,th{
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <?php
+  include 'connectdtb.php';
+  $sql = "SELECT * FROM products";
+  ?>
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">LIST USER</h3>
+      <div class="box-tools">
+        <form action="" method="POST">
+          <div class="input-group input-group-sm" style="width: 150px;">
+            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+            <div class="input-group-btn">
+              <button type="submit" name="search" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
           </div>
-      </form>
+        </form>
+      </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body table-responsive no-padding">
+      <table class="table table-hover">
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Avatar</th>
+          <th>Action</th>
+        </tr>
+        <?php 
+        while ($row = mysqli_fetch_array($listUser)) {    
+          ?>
+          <tr>
+            <td><?php echo $row['name']; ?></td>
+            <td><?php echo $row['username']; ?></td>
+            <td><img src="imguploads/user/<?php echo $row['avatar']; ?>"></td>
+            <td>
+              <?php echo "<a class='label label-success' href='index.php?type=user&action=update_user&id={$row['id']}'>EDIT</a>"; ?>
+              <?php echo "<a class='label label-danger' href='index.php?type=user&action=delete_user&id={$row['id']}'>DELETE</a>"; ?>
+            </td>
+          </tr>
+        <?php } ?>
+      </table>
+    </div>
   </div>
-</div>
-<!-- /.box-header -->
-<div class="box-body table-responsive no-padding">
-    <table class="table table-hover">
-      <tr>
-        <th>ID</th>
-        <th>User</th>
-        <th>Password</th>
-        <th>Action</th>
-    </tr>
-    <?php 
-        if (isset($_POST['search'])) {
-            $keyword = $_POST['table_search'];
-            if (!empty($keyword)){
-                $sql = "SELECT * FROM user WHERE user LIKE '%$keyword%' OR pass LIKE '%$keyword%'";
-            }
-        }
-            $result = mysqli_query($con,$sql);
-            while ($row = mysqli_fetch_array($result)) {
-                # code...
-            
-        
-    ?>
-    <tr>
-        <td><?php echo $row['id']; ?></td>
-        <td><?php echo $row['user']; ?></td>
-        <td><?php echo $row['pass']; ?></td>
-        <td>
-            <?php echo "<a class='label label-success' href='views/edit_user.php?id={$row['id']}'>EDIT</a>"; ?>
-            <?php echo "<a class='label label-danger' href='views/delete_user.php?id={$row['id']}'>DELETE</a>"; ?>
-            <!-- <a class="label label-danger">DELETE</a> -->
-        </td>
-    </tr>
-    <?php } ?>
-</table>
-</div>
-<!-- /.box-body -->
-</div>
+</body>
+</html>

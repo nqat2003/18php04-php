@@ -1,19 +1,19 @@
 <div class="box box-info">
 	<div class="box-header with-border">
-		<h3 class="box-title">ADD NEW PRODUCT</h3>
+		<h3 class="box-title">EDIT PRODUCT</h3>
 	</div>
-	<form class="form-horizontal" method="POST" name="add_product" action="index.php?type=product&action=add_product" enctype = "multipart/form-data">
+	<form class="form-horizontal" method="POST" name="update_product" action="index.php?type=product&action=update_product&id=<?php echo $id?>" enctype = "multipart/form-data">
 		<div class="box-body">
 			<div class="form-group">
 				<label for="inputEmail3" class="col-sm-2 control-label">Name</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" name="name" placeholder="Name">
+					<input type="text" class="form-control" name="name" value="<?php echo $nameCurrent; ?>">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="inputEmail3" class="col-sm-2 control-label">Price</label>
 				<div class="col-sm-10">
-					<input type="number" class="form-control" name="price" placeholder="Price">
+					<input type="number" class="form-control" name="price" value="<?php echo $priceCurrent; ?>">
 				</div>
 			</div>
 			<div class="form-group">

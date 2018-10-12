@@ -24,7 +24,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview">
+        <li class="treeview active">
           <a href="#">
             <i class="fa fa-user"></i> <span>User</span>
             <span class="pull-right-container">
@@ -32,11 +32,11 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.php?action=add_user"><i class="fa fa-user-plus"></i> Add User</a></li>
-            <li><a href="index.php?action=list_user"><i class="fa fa-th-list"></i> List Users</a></li>
+            <li><a href="index.php?type=user&action=add_user"><i class="fa fa-user-plus"></i> Add User</a></li>
+            <li><a href="index.php?type=user&action=list_user"><i class="fa fa-th-list"></i> List Users</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview active">
           <a href="#">
             <i class="fa fa-archive"></i> <span>Product</span>
             <span class="pull-right-container">
@@ -44,8 +44,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.php?action=add_product"><i class="fa fa-plus"></i> Add Product</a></li>
-            <li><a href="index.php?action=list_product"><i class="fa fa-th-list"></i> List Products</a></li>
+            <li><a href="index.php?type=product&action=add_product"><i class="fa fa-plus"></i> Add Product</a></li>
+            <li><a href="index.php?type=product&action=list_product"><i class="fa fa-th-list"></i> List Products</a></li>
           </ul>
         </li>
       </ul>

@@ -28,12 +28,7 @@
 			$secPass = md5(trim($pass));
 			$sql = "SELECT * FROM users WHERE username = '$username' AND pass = '$secPass'";
 			$result = mysqli_query($this->conn,$sql);
-			return $result->num_rows;
-		}
-		function getUserInfoByLogin($username,$pass){
-			$secPass = md5(trim($pass));
-			$sql = "SELECT * FROM users WHERE username = '$username' AND pass = '$secPass'";
-			return mysqli_query($this->conn,$sql);
+			return $result;
 		}
 	}
 ?>

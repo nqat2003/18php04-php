@@ -17,16 +17,16 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="imguploads/user/<?php echo $_SESSION['avatar']; ?>" class="user-image" alt="User Image">
-              <span class="hidden-xs">HI, <?php echo $_SESSION['name']; ?></span>
+              <img src="imguploads/user/<?php echo isset($_SESSION['avatar'])?$_SESSION['avatar']:'default.jpg'; ?>" class="user-image" alt="User Image">
+              <span class="hidden-xs"> <?php echo "HI,"; echo isset($_SESSION['name'])?$_SESSION['name']:'No login'; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="imguploads/user/<?php echo $_SESSION['avatar']; ?>" class="img-circle" alt="User Image">
+                <img src="imguploads/user/<?php echo isset($_SESSION['avatar'])?$_SESSION['avatar']:'default.jpg'; ?>" class="img-circle" alt="User Image">
 
                 <p>
-                  <?php echo $_SESSION['name']; ?> - Web Developer
+                  <?php echo isset($_SESSION['name'])?$_SESSION['name']:'No login'; ?> - Web Developer
                   <small>Member since Nov. 2018</small>
                 </p>
               </li>

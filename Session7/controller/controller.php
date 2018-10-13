@@ -77,9 +77,9 @@ class Controller{
 							$username = $_POST['username'];
 							$pass = $_POST['pass'];
 							$user = new User();
-							if ($user->userLogin($username,$pass)){
-								$userInfo = $user->getUserInfoByLogin($username,$pass);
-								while ($row = mysqli_fetch_array($userInfo)) {
+							$checkLogin = $user->userLogin($username,$pass);
+							if ($checkLogin->num_rows){
+								while ($row = mysqli_fetch_array($checkLogin)) {
 									$_SESSION['login'] = $row['username'];
 									$_SESSION['avatar'] = $row['avatar'];
 									$_SESSION['name'] = $row['name'];

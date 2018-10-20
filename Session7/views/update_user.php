@@ -2,7 +2,7 @@
 	<div class="box-header with-border">
 		<h3 class="box-title">EDIT USER</h3>
 	</div>
-	<form class="form-horizontal" method="POST" name="update_user" action="index.php?type=user&action=update_user&id=<?php echo $id?>" enctype = "multipart/form-data">
+	<form class="form-horizontal" method="POST" name="update_user" action="admin.php?type=user&action=update_user&id=<?php echo $id?>" enctype = "multipart/form-data">
 		<div class="box-body">
 			<div class="form-group">
 				<label for="inputEmail3" class="col-sm-2 control-label">Name</label>
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="box-footer">
-			<button type="submit" name="submit" class="btn btn-info pull-right">ADD</button>
+			<button type="submit" name="submit" class="btn btn-info pull-right">UPDATE</button>
 		</div>
 		<?php echo "$error"; ?>
 	</form>

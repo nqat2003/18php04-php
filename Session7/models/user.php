@@ -1,5 +1,4 @@
 <?php  
-	include 'config/connectdtb.php';
 	class User extends ConnectDTB{
 		function InsertUser($name,$username,$pass,$avatar){
 			$secPass = md5(trim($pass));

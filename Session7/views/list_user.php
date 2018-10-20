@@ -14,10 +14,6 @@
   </style>
 </head>
 <body>
-  <?php
-  include 'connectdtb.php';
-  $sql = "SELECT * FROM products";
-  ?>
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">LIST USER</h3>
@@ -49,8 +45,8 @@
             <td><?php echo $row['username']; ?></td>
             <td><img src="imguploads/user/<?php echo $row['avatar']; ?>"></td>
             <td>
-              <?php echo "<a class='label label-success' href='index.php?type=user&action=update_user&id={$row['id']}'>EDIT</a>"; ?>
-              <?php echo "<a class='label label-danger' href='index.php?type=user&action=delete_user&id={$row['id']}'>DELETE</a>"; ?>
+              <?php echo "<a class='label label-success' href='admin.php?type=user&action=update_user&id={$row['id']}'>EDIT</a>"; ?>
+              <?php echo "<a class='label label-danger' href='admin.php?type=user&action=delete_user&id={$row['id']}'>DELETE</a>"; ?>
             </td>
           </tr>
         <?php } ?>

@@ -2,7 +2,7 @@
 	<div class="box-header with-border">
 		<h3 class="box-title">ADD NEW USER</h3>
 	</div>
-	<form class="form-horizontal" method="POST" name="add_user" action="index.php?type=user&action=add_user" enctype = "multipart/form-data">
+	<form class="form-horizontal" method="POST" name="add_user" action="admin.php?type=user&action=add_user" enctype = "multipart/form-data">
 		<div class="box-body">
 			<div class="form-group">
 				<label for="inputEmail3" class="col-sm-2 control-label">Name</label>

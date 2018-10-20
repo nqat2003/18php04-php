@@ -14,10 +14,6 @@
   </style>
 </head>
 <body>
-  <?php
-  include 'connectdtb.php';
-  $sql = "SELECT * FROM products";
-  ?>
   <div class="box">
     <div class="box-header">
       <h3 class="box-title">LIST PRODUCT</h3>
@@ -40,6 +36,7 @@
           <th>Name</th>
           <th>Price</th>
           <th>Image</th>
+          <th>Description</th>
           <th>Action</th>
         </tr>
         <?php 
@@ -50,9 +47,10 @@
             <td><?php echo $row['name']; ?></td>
             <td><?php echo $row['price']. " VNĐ"; ?></td>
             <td><img src="imguploads/product/<?php echo $row['image']; ?>"></td>
+            <td><?php echo $row['description']; ?></td>
             <td>
-              <?php echo "<a class='label label-success' href='index.php?type=product&action=update_product&id={$row['id']}'>EDIT</a>"; ?>
-              <?php echo "<a class='label label-danger' href='index.php?type=product&action=delete_product&id={$row['id']}'>DELETE</a>"; ?>
+              <?php echo "<a class='label label-success' href='admin.php?type=product&action=update_product&id={$row['id']}'>EDIT</a>"; ?>
+              <?php echo "<a class='label label-danger' href='admin.php?type=product&action=delete_product&id={$row['id']}'>DELETE</a>"; ?>
             </td>
           </tr>
         <?php } ?>

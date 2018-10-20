@@ -32,8 +32,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.php?type=user&action=add_user"><i class="fa fa-user-plus"></i> Add User</a></li>
-            <li><a href="index.php?type=user&action=list_user"><i class="fa fa-th-list"></i> List Users</a></li>
+            <li><a href="admin.php?type=user&action=add_user"><i class="fa fa-user-plus"></i> Add User</a></li>
+            <li><a href="admin.php?type=user&action=list_user"><i class="fa fa-th-list"></i> List Users</a></li>
           </ul>
         </li>
         <li class="treeview active">
@@ -44,8 +44,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.php?type=product&action=add_product"><i class="fa fa-plus"></i> Add Product</a></li>
-            <li><a href="index.php?type=product&action=list_product"><i class="fa fa-th-list"></i> List Products</a></li>
+            <li><a href="admin.php?type=product&action=add_product"><i class="fa fa-plus"></i> Add Product</a></li>
+            <li><a href="admin.php?type=product&action=list_product"><i class="fa fa-th-list"></i> List Products</a></li>
           </ul>
         </li>
       </ul>

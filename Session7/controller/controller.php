@@ -1,11 +1,13 @@
 <?php 
+include 'config/connectdtb.php';
+include 'models/product.php';
+include 'models/user.php';
 class Controller{
 	function handleRequest(){
 		$action = isset($_GET['action'])?$_GET['action']:'home';
 		$type = isset($_GET['type'])?$_GET['type']:'home';
 		switch ($type) {
 			case 'user':
-				include 'models/user.php';
 				switch ($action) {
 					case 'add_user':
 						if (!isset($_SESSION['login'])) {
@@ -20,7 +22,7 @@ class Controller{
 							move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir);
 							$user = new User();
 							$user->InsertUser($name,$username,$pass,$avatar);
-							header("location:index.php?type=user&action=list_user");
+							header("location:admin.php?type=user&action=list_user");
 						}
 						include 'views/add_user.php';
 						break;
@@ -39,7 +41,7 @@ class Controller{
 						$id = $_GET['id'];
 						$user = new User();
 						$user->deleteUser($id);
-						header("location:index.php?type=user&action=list_user");
+						header("location:admin.php?type=user&action=list_user");
 						break;
 					case 'update_user':
 						if (!isset($_SESSION['login'])) {
@@ -67,7 +69,7 @@ class Controller{
 								$target_dir = "imguploads/user/" . basename($_FILES["image"]["name"]);
 								move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir);
 								$user->updateUser($name,$username,$np,$avatar,$id);
-								header("location:index.php?type=user&action=list_user");
+								header("location:admin.php?type=user&action=list_user");
 							}
 						}
 						include 'views/update_user.php';
@@ -84,7 +86,7 @@ class Controller{
 									$_SESSION['avatar'] = $row['avatar'];
 									$_SESSION['name'] = $row['name'];
 								}
-								header("location:index.php");
+								header("location:admin.php?type=user&action=list_user");
 							}else{
 								header("location: login.php");
 							}
@@ -93,10 +95,13 @@ class Controller{
 					case 'sign_out':
 						session_destroy();
 						header("location:login.php"); 
+					break;
+					default:
+						
+					break;
 				}
 			break;
 			case 'product':
-			include 'models/product.php';
 				switch ($action) {
 					case 'add_product':
 						if (!isset($_SESSION['login'])) {
@@ -105,12 +110,13 @@ class Controller{
 						if (isset($_POST['submit'])){
 							$name = $_POST['name'];
 							$price = $_POST['price'];
+							$description = $_POST['description'];
 							$image = $_FILES['image']['name'];
-							$target_dir = "imguploads/product/" . basename($_FILES["image"]["name"]);
+							$target_dir = "imguploads/product/" . uniqid().$image;
 							move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir);
 							$product = new Product();
-							$product->InsertProduct($name,$price,$image);
-							header("location:index.php?type=product&action=list_product");
+							$product->InsertProduct($name,$price,$image,$description);
+							header("location:admin.php?type=product&action=list_product");
 						}
 						include 'views/add_product.php';
 						break;
@@ -129,7 +135,7 @@ class Controller{
 						$id = $_GET['id'];
 						$product = new Product();
 						$product->deleteProduct($id);
-						header("location:index.php?type=product&action=list_product");
+						header("location:admin.php?type=product&action=list_product");
 						break;
 					case 'update_product':
 						if (!isset($_SESSION['login'])) {
@@ -142,17 +148,19 @@ class Controller{
 							$nameCurrent = $row['name'];
 							$priceCurrent = $row['price'];
 							$imgCurrent = $row['image'];
+							$desCurrent = $row['description'];
 						}
 						if (isset($_POST['submit'])) {
 							$name = $_POST['name'];
 							$price = $_POST['price'];
+							$description = $_POST['description'];
 							if (isset($_FILES['image']['name'])){
 								$img = $_FILES['image']['name'];
-								$target_dir = "imguploads/product/" . basename($img);
+								$target_dir = "imguploads/product/" .uniqid().$img;
 								move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir);
 							}else $img = $imgCurrent;
-							$product->editProduct($name,$price,$img,$id);
-							header("location:index.php?type=product&action=list_product");
+							$product->editProduct($name,$price,$img,$description,$id);
+							header("location:admin.php?type=product&action=list_product");
 						}
 						include 'views/update_product.php';
 						break;
@@ -162,7 +170,7 @@ class Controller{
 				}
 			break;
 			default:
-					# code...
+				header("location:login.php");
 			break;
 		}
 		

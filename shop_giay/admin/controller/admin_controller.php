@@ -94,9 +94,9 @@ class Controller{
 				header("location:login.php"); 
 				break;
 			case 'add_product':
-				if (!isset($_SESSION['login'])) {
-					header("location:login.php");
-				}
+				// if (!isset($_SESSION['login'])) {
+				// 	header("location:login.php");
+				// }
 				$product = new Product();
 				$listCategory = $product->getCategory();
 				if (isset($_POST['submit'])){
@@ -113,9 +113,9 @@ class Controller{
 				include 'views/add_product.php';
 				break;
 			case 'list_product':
-				if (!isset($_SESSION['login'])) {
-					header("location:login.php");
-				}
+				// if (!isset($_SESSION['login'])) {
+				// 	header("location:login.php");
+				// }
 				$product = new Product();
 				$listproduct = $product->getListProduct();
 				include 'views/list_product.php';

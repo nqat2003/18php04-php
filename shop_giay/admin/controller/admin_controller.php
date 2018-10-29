@@ -80,42 +80,47 @@ class Controller{
 						$userInfo = $user->getUserInfoByLogin($username,$pass);
 						while ($row = mysqli_fetch_array($userInfo)) {
 							$_SESSION['login'] = $row['username'];
-							$_SESSION['avatar'] = $row['avatar'];
 							$_SESSION['name'] = $row['name'];
 						}
 						header("location:index.php");
 					}else{
-						header("location: login.php");
+						header("location:login.php");
 					}
 				}
+				header('login.php');
 				break;
 			case 'sign_out':
 				session_destroy();
-				header("location:login.php"); 
+				unset($_SESSION['login']); 
 				break;
 			case 'add_product':
-				// if (!isset($_SESSION['login'])) {
-				// 	header("location:login.php");
-				// }
+				if (!isset($_SESSION['login'])) {
+					header("location:login.php");
+				}
 				$product = new Product();
 				$listCategory = $product->getCategory();
 				if (isset($_POST['submit'])){
 					$name = $_POST['name'];
 					$price = $_POST['price'];
 					$description = $_POST['description'];
-					$categoryId = $_POST['category'];
+					$type = $_POST['category'];
+					$hot = $_POST['hot']=="yes"?1:0;
+					$size = $_POST['size'];
+					$color = $_POST['color'];
+					$discount = $_POST['discount'];
+					$info = $_POST['information'];
 					$image = $_FILES['image']['name'];
-					$target_dir = "imguploads/product/" . uniqid().$image;
-					move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir);
-					$product->InsertProduct($name,$price,$image,$description,$categoryId);
+					$target_dir = "../images/product/" . uniqid().$image;
+					if ($product->InsertProduct($name,$price,$des,$type,$hot,$size,$discount,$info,$image,$color))
+						move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir);
 					header("location:index.php?action=list_product");
 				}
 				include 'views/add_product.php';
 				break;
 			case 'list_product':
-				// if (!isset($_SESSION['login'])) {
-				// 	header("location:login.php");
-				// }
+				if (!isset($_SESSION['login'])) {
+					header("location:login.php");
+				}
 				$product = new Product();
 				$listproduct = $product->getListProduct();
 				include 'views/list_product.php';
@@ -137,30 +142,66 @@ class Controller{
 				$product = new Product();
 				$productCurrent = $product->getProductInfo($id);
 				while ($row = mysqli_fetch_array($productCurrent)) {
-					$nameCurrent = $row['name'];
-					$priceCurrent = $row['price'];
-					$CurrentImg = $row['image'];
-					$desCurrent = $row['description'];
-					$cateName = $row['category'];
+					$currentName = $row['name'];
+					$currentPrice = $row['price'];
+					$currentImg = $row['image'];
+					$currentDes = $row['description'];
+					$currentType = $row['nametype'];
+					$currentColor = $row['color'];
+					$currentHot = $row['hot'];
+					$currentDiscount = $row['discount'];
+					$currentInf = $row['information'];
+					$currentSize = $row['size'];
 				}
-				$listCategory = $product->getCategoryForUpdateForm($cateName);
+				$listCategory = $product->getCategory();
 				if (isset($_POST['submit'])) {
 					$name = $_POST['name'];
 					$price = $_POST['price'];
 					$description = $_POST['description'];
-					$cate = $_POST['category'];
+					$type = $_POST['type'];
+					$color = $_POST['color'];
+					$hot = $_POST['hot'];
+					$discount = $_POST['discount'];
+					$info = $_POST['information'];
+					$size = $_POST['size'];
 					if (!empty($_FILES['image']['name'])){
 						$imagesName = $_FILES['image']['name'];
 						$img = uniqid().basename($img);
-						$target_dir = "imguploads/product/" .$img;
+						$target_dir = "../images/" .$img;
 						move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir);
-						unlink("imguploads/product/".$CurrentImg);
-					}else $img = $CurrentImg;
-					$product->editProduct($name,$price,$img,$description,$id,$cate);
+						unlink("../images/".$currentImg);
+					}else $img = $currentImg;
+					$product->editProduct($name,$price,$description,$type,$color,$hot,$discount,$info,$size,$img,$id);
 					header("location:index.php?action=list_product");
 				}
 				include 'views/update_product.php';
 				break;
+			case 'add_type':
+				if (!isset($_SESSION['login'])) {
+					header("location:login.php");
+				}
+				if (isset($_POST['submit'])) {
+					$name = $_POST['name'];
+					$productModel = new Product();
+					if($productModel->addType($name))
+						echo "Success <a href='index.php'>Back to home</a>";
+					else
+						echo "ERROR <a href='index.php'>Back to home</a>";
+				}
+				include 'views/add_type.php';
+				break;
+			// case 'change_name':
+			// 	if (!isset($_SESSION['login'])) {
+			// 		header("location:login.php");
+			// 	}
+			// 	$productModel = new Product();
+			// 	$shopname = $productModel->getShopName();
+			// 	if (isset($_POST['submit'])) {
+			// 		$newname = $_POST['name'];
+			// 		$doChange = $productModel->changeShopName($newname); 
+			// 	}
+			// 	include "views/change_shopname.php";
+			// 	break;
 			default:
 				# code...
 			break;

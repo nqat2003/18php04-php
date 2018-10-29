@@ -4,7 +4,7 @@
 			<div class="privacy about">
 				<h3>Chec<span>kout</span></h3>
 				<div class="checkout-right">
-					<h4>Your shopping cart contains: <span>3 Products</span></h4>
+					<h4>Your shopping cart contains: <span><?php echo count($_SESSION['cart']) . " "; echo count($_SESSION['cart'])==1?"product":"products"; ?></span></h4>
 					<table class="timetable_sub">
 						<thead>
 							<tr>
@@ -16,45 +16,71 @@
 							</tr>
 						</thead>
 						<tbody>
+							<?php
+							if ($_SESSION['cart_details']!=false) {
+								# code...
+								$err='';
+								$i = 0;
+								while ($row = mysqli_fetch_array($_SESSION['cart_details'])) {
+									$getCopyOfCart[$i]['name']=$row['name'];
+									$getCopyOfCart[$i]['price']=$row['price'];
+									$getCopyOfCart[$i]['quantity']=$_SESSION['cart'][$row['id']]['quantity'];
+									$i++;
+							 ?>
 							<tr class="rem1">
-								<td class="invert-image"><a href="single.html"><img src="images/s1.jpg" alt=" " class="img-responsive"></a></td>
+								<td class="invert-image" ><a href="single.php"><img src="images/<?php echo $row['image']; ?>" alt=" " class="img-responsive"></a></td>
 								<td class="invert">
 									<div class="quantity">
 										<div class="quantity-select">
-											<div class="entry value-minus">&nbsp;</div>
-											<div class="entry value"><span>1</span></div>
-											<div class="entry value-plus active">&nbsp;</div>
+											<a href="index.php?action=minus&id=<?php echo$row['id']; ?>"><div class="entry value-minus">&nbsp;</div></a>
+											<div class="entry value"><span><?php echo $_SESSION['cart'][$row['id']]['quantity']; ?></span></div>
+											<a href="index.php?action=plus&id=<?php echo$row['id']; ?>"><div class="entry value-plus active">&nbsp;</div></a>
 										</div>
 									</div>
+									</div>
 								</td>
-								<td class="invert">Bella Toes</td>
+								<td class="invert"><?php echo $row['name']; ?></td>
 
-								<td class="invert">$675.00</td>
+								<td class="invert">$<?php echo $row['price']; ?></td>
 								<td class="invert">
 									<div class="rem">
-										<div class="close1" style="right: 15px;"> </div>
+										<a href="index.php?action=delete&id=<?php echo $row['id']; ?>"><div class="close1" style="right: 15px;"> </div></a>
 									</div>
 
 								</td>
 							</tr>
+							<?php }}else{$err = "Your cart is empty!";}
+							 ?>
+							
 
 						</tbody>
 					</table>
+					<?php echo "<span><b>". isset($err)?$err:"" ."</b></span>"; ?>
 				</div>
 				<div class="checkout-left">
 					<div class="col-md-4 checkout-left-basket">
 						<a href="index.php?action=home"><h4>Continue to basket</h4></a>
 						<ul>
-							<li>Product1 <i>-</i> <span>$675.00 </span></li>
-							<li>Product2 <i>-</i> <span>$325.00 </span></li>
-							<li>Product3 <i>-</i> <span>$405.00 </span></li>
-							<li>Total Service Charges <i>-</i> <span>$55.00</span></li>
-							<li>Total <i>-</i> <span>$1405.00</span></li>
+
+							<?php
+								$_SESSION['sum'] = 0;
+								if (isset($getCopyOfCart)) {
+								 	# code...
+								
+								foreach ($getCopyOfCart as $k => $v) {
+								# code...
+							 ?>
+								<li><?php echo $v['name']; ?> <i>-</i> <span>$ <?php echo number_format($v['price']*$v['quantity'],2); ?> </span></li>
+
+							<?php $_SESSION['sum']+=$v['price']*$v['quantity'];}} ?>
+							<li>&nbsp;</li>
+							<li>Total <i>-</i> <span>$ <?php echo number_format($_SESSION['sum'],2); ?></span></li>
 						</ul>
 					</div>
+					<?php if($err==''){ ?>
 					<div class="col-md-8 address_form">
 						<h4>Add a new Details</h4>
-						<form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+						<form action="index.php?action=payment" method="post" class="creditly-card-form agileinfo_form">
 							<section class="creditly-wrapper wrapper">
 								<div class="information-wrapper">
 									<div class="first-row form-group">
@@ -66,39 +92,31 @@
 											<div class="card_number_grid_left">
 												<div class="controls">
 													<label class="control-label">Mobile number:</label>
-													<input class="form-control" type="text" placeholder="Mobile number">
+													<input class="form-control" type="text" placeholder="Mobile number" name=phone>
 												</div>
 											</div>
 											<div class="card_number_grid_right">
 												<div class="controls">
-													<label class="control-label">Landmark: </label>
-													<input class="form-control" type="text" placeholder="Landmark">
+													<label class="control-label">Address: </label>
+													<input class="form-control" type="text" placeholder="Address" name="addr">
 												</div>
 											</div>
 											<div class="clear"> </div>
 										</div>
 										<div class="controls">
 											<label class="control-label">Town/City: </label>
-											<input class="form-control" type="text" placeholder="Town/City">
-										</div>
-										<div class="controls">
-											<label class="control-label">Address type: </label>
-											<select class="form-control option-w3ls">
-												<option>Office</option>
-												<option>Home</option>
-												<option>Commercial</option>	
-											</select>
+											<input class="form-control" type="text" placeholder="Town/City" name = "city">
 										</div>
 									</div>
-									<button class="submit check_out">Delivery to this Address</button>
+									<button class="submit check_out" type="submit" name="pay">Make a Payment</button>
 								</div>
 							</section>
 						</form>
-						<div class="checkout-right-basket">
-							<a href="payment.html">Make a Payment </a>
+						<div class="">
+							<a href="">&nbsp; </a>
 						</div>
 					</div>
-
+					<?php } ?>
 					<div class="clearfix"> </div>
 
 

@@ -2,7 +2,7 @@
 	class User extends ConnectDTB{
 		function InsertUser($name,$username,$pass,$avatar){
 			$secPass = md5(trim($pass));
-			$sql = "INSERT INTO users (name,username,pass,avatar) VALUES ('$name','$username','$secPass','$avatar')";
+			$sql = "INSERT INTO users (name,username,pass,avatar,cusID) VALUES ('$name','$username','$secPass','$avatar','3')";
 			mysqli_query($this->conn,$sql);			
 		}
 		function getUserInfo($id){
@@ -31,7 +31,9 @@
 		}
 		function getUserInfoByLogin($username,$pass){
 			$secPass = md5(trim($pass));
-			$sql = "SELECT * FROM users WHERE username = '$username' AND pass = '$secPass'";
+			$sql = "SELECT users.*,customers.name FROM users 
+					INNER JOIN customers ON users.cusId = customers.id
+					WHERE username = '$username' AND pass = '$secPass'";
 			return mysqli_query($this->conn,$sql);
 		}
 	}

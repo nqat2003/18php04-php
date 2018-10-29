@@ -37,7 +37,6 @@
           <th>Category</th>
           <th>Price</th>
           <th>Image</th>
-          <th>Description</th>
           <th>Action</th>
         </tr>
         <?php 
@@ -46,12 +45,11 @@
           <tr>
             <td><?php echo $row['id']; ?></td>
             <td><?php echo $row['name']; ?></td>
-            <td><?php echo $row['category']; ?></td>
-            <td><?php echo $row['price']. " VNĐ"; ?></td>
-            <td><img src="imguploads/product/<?php echo $row['image']; ?>"></td>
-            <td><?php echo $row['description']; ?></td>
+            <td><?php echo $row['nametype']; ?></td>
+            <td><?php echo "$".$row['price']; ?></td>
+            <td><img src="../images/<?php echo $row['image']; ?>"></td>
             <td>
-              <?php echo "<a class='label label-success' href='index.php?action=update_product&id={$row['id']}'>EDIT</a>"; ?>
+              <?php echo "<a class='label label-success' href='index.php?action=update_product&id={$row['id']}'>VIEW DETAILS</a>"; ?>
               <?php echo "<a class='label label-danger' href='index.php?action=delete_product&id={$row['id']}'>DELETE</a>"; ?>
             </td>
           </tr>

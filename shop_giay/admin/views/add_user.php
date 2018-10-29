@@ -18,17 +18,16 @@
 			</div>
 			<div class="form-group">
 				<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-
 				<div class="col-sm-10">
 					<input type="password" class="form-control" name="pass" placeholder="Password">
 				</div>
 			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<label for="inputPassword3" class="col-sm-2 control-label">Avatar</label>
 				<div class="col-sm-10">
 					<input type="file" name="image">
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="box-footer">
 			<button type="submit" name="submit" class="btn btn-info pull-right" onclick="return checkForm();">ADD</button>

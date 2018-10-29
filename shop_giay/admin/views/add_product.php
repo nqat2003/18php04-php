@@ -17,7 +17,38 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="inputEmail3" class="col-sm-2 control-label">Danh mục</label>
+				<label for="inputEmail3" class="col-sm-2 control-label">Color</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="color" placeholder="Color">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Discount</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="discount" placeholder="Discount">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Size</label>
+				<div class="col-sm-10">
+					<select name="size">
+						<?php for ($i=35;$i<=44;$i++){ ?>
+						<option><?php echo $i; ?></option>
+						<?php } ?>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Hot</label>
+				<div class="col-sm-10">
+					<select name="hot">
+						<option>yes</option>
+						<option>no</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Categology</label>
 				<div class="col-sm-10">
 					<select name="category">
 						<?php while ($row = mysqli_fetch_array($listCategory)) {
@@ -30,6 +61,12 @@
 				<label for="inputEmail3" class="col-sm-2 control-label">Desciption</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="description" placeholder="description">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Information</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="information" placeholder="Information">
 				</div>
 			</div>
 			<div class="form-group">

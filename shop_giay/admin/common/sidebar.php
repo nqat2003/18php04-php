@@ -45,8 +45,19 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="index.php?action=add_product"><i class="fa fa-plus"></i> Add Product</a></li>
+            <li><a href="index.php?action=add_type"><i class="fa fa-plus"></i> Add Categologies</a></li>
             <li><a href="index.php?action=list_product"><i class="fa fa-th-list"></i> List Products</a></li>
           </ul>
         </li>
+        <!-- <li class="treeview">
+          <a href="index.php?action=change_name">
+            <i class="fa fa-laptop"></i>
+            <span>Change Shop Name</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+        </li> -->
+
       </ul>
     </section>

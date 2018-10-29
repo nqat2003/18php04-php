@@ -44,16 +44,18 @@
 		<?php while ($row = mysqli_fetch_array($listHot)) {
 			# code...
 		 ?>
+		 <a href="index.php?action=single&id=<?php echo $row['id']; ?>">
 		<div class="special-sec1">
 			<div class="col-xs-4 img-deals">
 				<img src="images/<?php echo $row['image']; ?>" alt="">
 			</div>
 			<div class="col-xs-8 img-deal1">
 				<h3><?php echo $row['name']; ?></h3>
-				<a href="single.html">$<?php echo $row['price']; ?></a>
+				<a >$<?php echo $row['price']; ?></a>
 			</div>
 			<div class="clearfix"></div>
 		</div>
+		</a>
 		<?php } ?>
 		</div>
 	

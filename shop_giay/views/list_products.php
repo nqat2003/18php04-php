@@ -1,4 +1,5 @@
-<?php 
+<?php
+	if (count($listProducts)) {
 	while ($row = mysqli_fetch_array($listProducts)) {
 		
 ?>
@@ -14,7 +15,7 @@
 				</div>
 				<span class="product-new-top">New</span>
 			</div>
-			<div class="item-info-product"  style="height: 80px;">
+			<div class="item-info-product">
 				<h4>
 					<a href="single.html"><?php echo $row['name']; ?> </a>
 				</h4>
@@ -51,4 +52,4 @@
 		</div>
 	</div>
 </div>
-<?php } ?>
+<?php } } ?>

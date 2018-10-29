@@ -38,28 +38,67 @@
 					include 'views/list_products.php';
 					break;
 				case 'add_cart':
-					$id = $_GET['id'];
-					if (isset($_SESSION['cart'][$id])){
-						$_SESSION['cart'][$id]['quantity']++;
+					$productModel = new Products();
+					if (!isset($_GET['id'])){
+						$_SESSION['cart_details'] = $productModel->getCart($_SESSION['cart']);
+						include 'views/checkout.php';
 					}else{
-						$productModel = new Products();
-						$detailProducts = $productModel->details($id);
-						$row = mysqli_fetch_array($detailProducts);
-						$_SESSION['cart'][$row['id']]=array(
-							"quantity" => 1,
-							"price" => $row['price']
-						);
-					}
-					if (isset($_SESSION['cart'])) {
-						$sql = "SELECT * FROM products WHERE id IN(";
-						foreach ($_SESSION['cart'] as $id => $value) {
-							$sql.=$id.",";
+						$id = $_GET['id'];
+						if (isset($_SESSION['cart'][$id])){
+							$_SESSION['cart'][$id]['quantity']++;
+						}else{
+							$detailProducts = $productModel->details($id);
+							$row = mysqli_fetch_array($detailProducts);
+							$_SESSION['cart'][$row['id']]=array(
+								"quantity" => 1,
+								"price" => $row['price']
+							);
 						}
-						$sql = substr($sql, 0,-1).")";
-						$result = mysqli_query($this->conn,$sql);
-						
+						$_SESSION['cart_details'] = $productModel->getCart($_SESSION['cart']);
+						include 'views/checkout.php';
 					}
+					break;
+				case "plus":
+					$id = $_GET['id'];
+					$productModel = new Products();
+					$_SESSION['cart'][$id]['quantity']++;
+					$_SESSION['cart_details'] = $productModel->getCart($_SESSION['cart']);
 					include 'views/checkout.php';
+					break;
+				case "minus":
+					$id = $_GET['id'];
+					$productModel = new Products();
+					$_SESSION['cart'][$id]['quantity']--;
+					$_SESSION['cart_details'] = $productModel->getCart($_SESSION['cart']);
+					include 'views/checkout.php';
+					break;
+				case 'delete':
+					$id = $_GET['id'];
+					$productModel = new Products();
+					unset($_SESSION['cart'][$id]);
+					$_SESSION['cart_details'] = $productModel->getCart($_SESSION['cart']);
+					include 'views/checkout.php';
+					break;
+				case 'payment':
+					$name = $_POST['name'];
+					$addr = $_POST['addr'];
+					$phone = $_POST['phone'];
+					$city = $_POST['city'];
+					include 'views/payment.php';
+					break;
+				case 'endpay':
+					$name = $_POST['name'];
+					$addr = $_POST['addr'];
+					$phone = $_POST['phone'];
+					$city = $_POST['city'];
+					$cusModel = new Customer();
+					$addCus = $cusModel->saveCus($name,$addr,$phone,$city);
+					$idCus = $cusModel->getCusId($name,$phone);
+					$saveCart = $cusModel->saveCart($_SESSION['cart'],$idCus);
+					unset($_SESSION['cart']);
+					echo "<h2>Order success</h2>";
+					echo "<a href='index.php?action=home'>Continue to shopping</a> or ";
+					echo "<a href='404.html'>Views your payment</a>";
 					break;
 				default:
 					# code...

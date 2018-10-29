@@ -45,5 +45,15 @@
 	  		$result = mysqli_query($this->conn,$sql);
 	  		return $result;
 		}
+		function getCart($cart){
+			$sql = "SELECT * FROM products WHERE id IN(";
+			foreach ($cart as $id => $value) {
+				$sql.=$id.",";
+			}
+			$sql = substr($sql, 0,-1).")";
+			$result = mysqli_query($this->conn,$sql);
+			return $result;
+		}
+		
 	}
 ?>

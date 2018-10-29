@@ -3,6 +3,7 @@
 	require 'admin/config/connectdtb.php';
 	include 'controller/controller.php';
 	include 'models/products.php';
+	include 'models/customer.php';
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -36,6 +37,55 @@
 	
 	<link href="//fonts.googleapis.com/css?family=Montserrat:100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
 	rel="stylesheet">
+	<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAA7j_Q-rshuWkc8HyFI4V2HxQYPm-xtd00hTQOC0OXpAMO40FHAxT29dNBGfxqMPq5zwdeiDSHEPL89A" type="text/javascript"></script>
+	<script language="javascript">
+        var geocoder, location1, location2;
+        function initialize() {
+        	geocoder = new GClientGeocoder();
+    	}
+ 
+    	function showLocation() {
+    		geocoder.getLocations(document.forms[0].address1.value, function (response) {
+    			if (!response || response.Status.code != 200)
+    			{
+    				alert("Sorry, we were unable to geocode the first address");
+    			}
+    			else
+    			{
+    				location1 = {lat: response.Placemark[0].Point.coordinates[1], lon: response.Placemark[0].Point.coordinates[0], address: response.Placemark[0].address};
+    				geocoder.getLocations(document.forms[0].address2.value, function (response) {
+    					if (!response || response.Status.code != 200)
+    					{
+    						alert("Sorry, we were unable to geocode the second address");
+    					}
+    					else
+    					{
+    						location2 = {lat: response.Placemark[0].Point.coordinates[1], lon: response.Placemark[0].Point.coordinates[0], address: response.Placemark[0].address};
+    						calculateDistance();
+    					}
+    				});
+    			}
+    		});
+    	}
+     
+    function calculateMoney()
+    {
+        try
+        {
+            var glatlng1 = new GLatLng(location1.lat, location1.lon);
+            var glatlng2 = new GLatLng(location2.lat, location2.lon);
+            var miledistance = glatlng1.distanceFrom(glatlng2, 3959).toFixed(1);
+            var kmdistance = (miledistance * 1.609344).toFixed(1);
+ 
+            document.getElementById('money').innerHTML = '<strong>Địa chỉ 1: </strong>' + location1.address + '<br /><strong>Địa chỉ 2: </strong>' + location2.address + '<br /><strong>Khoảng cánh: </strong>' + miledistance + ' miles (or ' + kmdistance + ' km)';
+        }
+        catch (error)
+        {
+            alert(error);
+        }
+    }
+ 
+    </script>
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
 </head>
 

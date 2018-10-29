@@ -49,6 +49,7 @@ table.timetable_sub {
 }
 
 .timetable_sub td {
+	width: 60%;
 	border: 1px solid #CDCDCD;
 }
 
@@ -82,9 +83,9 @@ td.invert-image a img {
 
 .value-minus,
 .value-plus {
-	height: 30px;
+	height: 40px;
 	line-height: 24px;
-	width: 30px;
+	width: 40px;
 	margin-right: 3px;
 	display: inline-block;
 	cursor: pointer;
@@ -125,8 +126,8 @@ td.invert-image a img {
 
 .value {
 	cursor: default;
-	width: 30px;
-	height: 30px;
+	width: 40px;
+	height: 40px;
 	padding: 8px 0px;
 	color: #A9A9A9;
 	line-height: 24px;

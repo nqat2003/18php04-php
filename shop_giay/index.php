@@ -91,6 +91,7 @@
 
 <body>
 	<!-- banner -->
+	<?php include 'admin/common/header.php'; ?>
 	<?php include 'common/header.php'; ?>
 	</div>
 	<!-- //banner -->

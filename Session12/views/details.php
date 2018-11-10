@@ -13,11 +13,11 @@
 
                <!-- Author -->
                <p class="lead">
-                by <a href="#">Start Bootstrap</a>
+                by <a href="#">Some one just I know</a>
             </p>
 
             <!-- Preview Image -->
-            <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+            <img class="img-responsive" style="width: 900px;height: 300px;" src="http://placehold.it/900x300" alt="">
 
             <!-- Date/Time -->
             <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo date('l, d - m - Y',strtotime($row['created'])); ?></p>
@@ -30,34 +30,45 @@
             <hr>
         <?php } ?>
         <!-- Blog Comments -->
+        <?php if ($checkLike == 0 && $userId==0) { ?>
+            <a href="index.php?action=<?php echo isset($_SESSION['login'])?'like':'login' ?>&id=<?php echo $id; ?>">LIKE </a>
+        <?php }else{ echo "Bạn đã thích bài này!";} ?>
+        <p> Tổng like: <?php echo $countLike; ?> </p> 
         
         <!-- Comments Form -->
-        <div class="well">
-            <h4>Viết bình luận ...<span class="glyphicon glyphicon-pencil"></span></h4>
-            <form role="form" action="add_comment" method="POST">
-                <div class="form-group">
-                    <textarea class="form-control" rows="3" name="comment"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Gửi</button>
-            </form>
-        </div>
+        <?php if (isset($_SESSION['login'])){ ?>
+            <div class="well">
+                <h4>Viết bình luận ...<span class="glyphicon glyphicon-pencil"></span></h4>
+                <form role="form" action="index.php?action=add_cmt&id=<?php echo $id; ?>" method="POST">
+                    <div class="form-group">
+                        <textarea class="form-control" rows="3" name="comment"></textarea>
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-primary">Gửi</button>
+                </form>
+            </div>
+        <?php }else {echo "Vui lòng <a href='index.php?action=login&id=$id' style='color:blue'>đăng nhập</a> để thực hiện bình luận";} ?>
+        
 
         <hr>
 
         <!-- Posted Comments -->
 
         <!-- Comment -->
+        <?php while ($row = mysqli_fetch_array($listcmt)) {
+            # code...
+         ?>
         <div class="media">
             <a class="pull-left" href="#">
-                <img class="media-object" src="http://placehold.it/64x64" alt="">
+                <img class="media-object" style="width: 40px;height: 40px;" src="images/users/<?php echo $row['avatar']; ?>" alt="">
             </a>
             <div class="media-body">
-                <h4 class="media-heading">Start Bootstrap
-                    <small>August 25, 2014 at 9:30 PM</small>
+                <h4 class="media-heading"><?php echo $row['name']; ?>
+                    <small> <?php  echo date('l, d - m - Y',strtotime($row['created']));?></small>
                 </h4>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                <?php echo $row['content']; ?>
             </div>
         </div>
+        <?php } ?>
     </div>
 
     <!-- Blog Sidebar Widgets Column -->

@@ -1,4 +1,6 @@
-<?php include 'controller/controller.php'; ?>
+<?php include 'controller/controller.php';
+    session_start();
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
